@@ -4,8 +4,8 @@ import HomeComponent from './components/HomeComponent/HomeComponent';
 import DoctorDetails from './components/DoctorDetails/DoctorDetails';
 import BookAppointment from './components/BookAppointment/BookAppointment';
 import MyAppointments from './components/MyAppointments/MyAppointments';
-import Success from './components/Success/Success';
 import Navbar from './components/Navbar';
+import NotFound from './components/NotFound/NotFound';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
         <Route exact path="/doctorsDetails/:id" element={<DoctorDetails />} />
         <Route exact path='/book-appointment/:id' element={<BookAppointment />} />
         <Route exact path="/my-appointments" element={<MyAppointments />} />
-        <Route exact path="/success" element={<Success />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
     </>

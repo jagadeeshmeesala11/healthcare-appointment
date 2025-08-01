@@ -1,36 +1,43 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-const DoctorsCard = ({id,
-  name,
-  specialization,
-  image,
-  availability,}) => {
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const DoctorsCard = ({ id, name, specialization, image, availability }) => {
   return (
-    <li className="w-full sm:w-[280px] bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300">
-  <Link to={`/doctorsDetails/${id}`} className="flex flex-col items-center space-y-2 group">
-    <img
-      src={image}
-      alt={name}
-      className="w-24 h-24 rounded-full object-cover border-2 border-teal-500 group-hover:scale-105 transition-transform duration-200"
-    />
-    <h2 className="text-xl font-semibold text-gray-800 group-hover:text-teal-700 transition-colors duration-200">
-      {name}
-    </h2>
-    <p className="text-sm text-gray-500">{specialization}</p>
-    <span
-      className={`text-xs font-semibold px-3 py-1 rounded-full ${
-        availability === 'Available'
-          ? 'bg-green-100 text-green-700'
-          : 'bg-red-100 text-red-700'
-      }`}
-    >
-      {availability}
-    </span>
-  </Link>
-</li>
+    <li className="w-full bg-gradient-to-tr from-white to-blue-50 border list-none border-indigo-100 rounded-xl p-6 shadow-lg hover:shadow-indigo-200 transition duration-300">
+      <Link
+        to={`/doctorsDetails/${id}`}
+        className="flex flex-col items-center text-center space-y-4 group"
+      >
+        <div className="relative">
+          <img
+            src={image}
+            alt={name}
+            className="w-24 h-24 rounded-full object-cover border-4 border-indigo-500 shadow-md group-hover:scale-110 transition-transform duration-300"
+          />
+          <span
+            className={`absolute -bottom-1 -right-1 text-[10px] px-2 py-0.5 rounded-full font-semibold ${
+              availability === 'Available'
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-400 text-white'
+            }`}
+          >
+            {availability}
+          </span>
+        </div>
 
+        <div>
+          <h2 className="text-xl font-extrabold text-gray-800 group-hover:text-indigo-700 tracking-wide">
+            {name}
+          </h2>
+          <p className="text-sm font-medium text-gray-500">{specialization}</p>
+        </div>
 
-  )
-}
+        <button className="mt-2 px-4 py-1 text-sm font-semibold rounded-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition">
+          View Profile
+        </button>
+      </Link>
+    </li>
+  );
+};
 
-export default DoctorsCard
+export default DoctorsCard;

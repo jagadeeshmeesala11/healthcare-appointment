@@ -33,7 +33,7 @@ const BookAppointment = () => {
     else {
       const selectedDate = new Date(formData.date);
       const today = new Date();
-      today.setHours(0, 0, 0, 0); 
+      today.setHours(0, 0, 0, 0);
       if (selectedDate < today) newErrors.date = 'Date cannot be in the past';
     }
 
@@ -46,7 +46,6 @@ const BookAppointment = () => {
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -64,7 +63,6 @@ const BookAppointment = () => {
       return;
     }
 
-   
     const appointment = {
       doctorId: doctor.id,
       doctorName: doctor.name,
@@ -152,15 +150,22 @@ const BookAppointment = () => {
             </div>
 
             <div>
-              <input
-                type="time"
+              <select
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
                 className={`w-full border rounded px-3 py-2 focus:outline-teal-500 ${
                   errors.time ? 'border-red-500' : 'border-gray-300'
                 }`}
-              />
+              >
+                <option value="">Select a time slot</option>
+                {doctor.availabilitySlots &&
+                  doctor.availabilitySlots.map((slot, index) => (
+                    <option key={index} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
+              </select>
               {errors.time && (
                 <p className="text-red-500 text-sm mt-1">{errors.time}</p>
               )}
@@ -168,7 +173,7 @@ const BookAppointment = () => {
 
             <button
               type="submit"
-              className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700"
+              className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition"
             >
               Confirm Appointment
             </button>

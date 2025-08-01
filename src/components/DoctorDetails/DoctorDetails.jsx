@@ -14,7 +14,7 @@ const DoctorDetails = () => {
         <h2 className="text-2xl text-red-600 font-semibold">Doctor not found</h2>
         <button
           onClick={() => navigate('/')}
-          className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+          className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
         >
           Go Back
         </button>
@@ -24,12 +24,14 @@ const DoctorDetails = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
-      <div className="max-w-4xl w-full bg-white p-6 rounded-xl shadow-lg flex flex-col sm:flex-row gap-6">
-        <img
-          src={doctor.image}
-          alt={doctor.name}
-          className="w-32 h-32 rounded-full object-cover border-4 border-teal-500 mx-auto sm:mx-0"
-        />
+      <div className="max-w-4xl w-full bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-transform duration-300 flex flex-col sm:flex-row gap-6">
+        <div className="flex justify-center sm:justify-start">
+          <img
+            src={doctor.image}
+            alt={doctor.name}
+            className="w-32 h-32 rounded-full object-cover border-4 border-indigo-500"
+          />
+        </div>
 
         <div className="flex-1 space-y-2">
           <h2 className="text-2xl font-bold text-gray-800">{doctor.name}</h2>
@@ -53,7 +55,17 @@ const DoctorDetails = () => {
               <p><strong>Location:</strong> {doctor.location}</p>
             )}
             {doctor.languages && (
-              <p><strong>Languages:</strong> {doctor.languages.join(', ')}</p>
+              <div className="flex gap-2 flex-wrap">
+                <strong>Languages:</strong>
+                {doctor.languages.map((lang, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs"
+                  >
+                    {lang}
+                  </span>
+                ))}
+              </div>
             )}
             <p>
               <strong>Availability:</strong>{' '}
@@ -69,7 +81,8 @@ const DoctorDetails = () => {
             </p>
             {doctor.availabilitySlots && (
               <p>
-                <strong>Time Slots:</strong> {doctor.availabilitySlots.join(', ')}
+                <strong>Time Slots:</strong>{' '}
+                {doctor.availabilitySlots.join(', ')}
               </p>
             )}
           </div>
@@ -77,7 +90,7 @@ const DoctorDetails = () => {
           {doctor.availability === 'Available' ? (
             <Link
               to={`/book-appointment/${doctor.id}`}
-              className="mt-6 inline-block px-5 py-2 rounded font-medium bg-teal-600 text-white hover:bg-teal-700 transition"
+              className="mt-6 inline-block px-5 py-2 rounded font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition"
             >
               Book Appointment
             </Link>

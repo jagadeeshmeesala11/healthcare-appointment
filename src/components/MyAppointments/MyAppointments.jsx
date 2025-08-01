@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -14,6 +14,14 @@ const MyAppointments = () => {
       toast.error('Failed to load appointments data');
     }
   }, []);
+
+  const sortedAppointments = useMemo(() => {
+    return [...appointments].sort((a, b) => {
+      const dateA = new Date(`${a.date}T${a.time}`);
+      const dateB = new Date(`${b.date}T${b.time}`);
+      return dateA - dateB;
+    });
+  }, [appointments]);
 
   const clearAll = () => {
     if (
@@ -52,13 +60,26 @@ const MyAppointments = () => {
       </div>
 
       {appointments.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg mt-20">
-          You have no booked appointments yet.
-        </p>
+        <div className="text-center text-gray-500 text-lg mt-20">
+          <p>You have no booked appointments yet.</p>
+          <Link
+            to="/"
+            className="mt-4 inline-block text-teal-600 font-medium hover:underline"
+          >
+            Book your first appointment
+          </Link>
+        </div>
       ) : (
         <ul className="space-y-6">
-          {appointments.map((item, index) => {
+          {sortedAppointments.map((item, index) => {
             const key = `${item.doctorId}-${item.date}-${item.time}-${item.email}`;
+            const displayDate = new Date(`${item.date}T${item.time}`);
+            const formattedDate = displayDate.toLocaleDateString();
+            const formattedTime = displayDate.toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+
             return (
               <li
                 key={key}
@@ -77,12 +98,12 @@ const MyAppointments = () => {
                   <span className="font-medium">Email:</span> {item.email}
                 </p>
                 <p className="text-gray-700">
-                  <span className="font-medium">Date & Time:</span> {item.date} at {item.time}
+                  <span className="font-medium">Date & Time:</span> {formattedDate} at {formattedTime}
                 </p>
                 <button
                   onClick={() => deleteAppointment(index)}
                   className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-sm transition"
-                  aria-label={`Delete appointment with Dr. ${item.doctorName} on ${item.date} at ${item.time}`}
+                  aria-label={`Delete appointment with Dr. ${item.doctorName}`}
                 >
                   Delete
                 </button>
